@@ -47,8 +47,7 @@ get_template_part('cat-featured');
 		$current_page = max( 1, get_query_var('paged') );
 		$vlimit = get_option('jtheme_index_vlimit');
 		$indexCat = get_option('jtheme_index_cat');
-		$indexSort = get_option('jtheme_index_sort');
-		$indexNav = get_option('jtheme_index_nav');
+		$indexSort = get_option('jtheme_index_sort');		
 		if(isset($_GET['orderby'])){
 		$getSort = $_GET['orderby'];
 		}
@@ -87,9 +86,7 @@ get_template_part('cat-featured');
 	</div><!-- end .loop-content -->
     </div>
 	<?php
-			if($indexNav == 1){
-			get_template_part('loop-nav');
-			};
+			
 		else :
 			get_template_part('loop-error');
 		endif; 
@@ -119,6 +116,15 @@ get_template_part('cat-featured');
 	
 	</div>
 	
-</div></div><!-- end #main -->
+</div>
+<?php
+$featuredVideo =  get_option('jtheme_index_status');
+if($featuredVideo == true){
+get_template_part('cat-featured-footer');
+ }else{
+ echo '<br /><br />';
+ }
+ ?>
+</div><!-- end #main -->
 
 <?php get_footer(); ?>

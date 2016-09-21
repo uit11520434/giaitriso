@@ -71,7 +71,9 @@
 				<p>Paste the raw video code to here, such as <-object->, <-embed-> or <-iframe-> code.</p>
 				<br/>
 			</div>
-			
+			<?php
+				$seoMeta = get_option('jtheme_seo_metaon');
+				if($seoMeta == true){ ?>
 			<div class="video-seo-block">
 				<label for="comment">Meta Title</label>
 				<textarea id="comment" name="seo_title"></textarea>
@@ -92,7 +94,7 @@
 				<p>IF you want to put your custom meta Keywords then put here otherwise your post TAGS will be the default meta Keywords</p>
 				<br/>
 			</div>
-			
+			<?php } ?>
 			<div class="video-cat">
 				<label for="comment">Video Categories</label><br/>
 				<?php wp_dropdown_categories( 'show_option_none=Category&tab_index=4&taxonomy=category' ); ?>
@@ -115,8 +117,7 @@
 			
 			<label for="comment">Video Tags</label>
             <input type="text" id="author" value="" name="video_tags" placeholder="Video Tags" />
-			
-			
+				
 			       
             <!-- Submit button-->
             <br />

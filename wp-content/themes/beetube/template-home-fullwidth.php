@@ -85,14 +85,14 @@ get_template_part('cat-featured');
 				get_template_part('item-video');
 			endwhile; ?>
 		</div>
+
 	</div><!-- end .loop-content -->
+			<?php
+			else:
+			get_template_part('loop-error');	
+			?>
     </div>
-	<?php
-			if($indexNav == 1){
-			get_template_part('loop-nav');
-			};
-		else :
-			get_template_part('loop-error');
+	<?php		 
 		endif; 
 	$bottomAdcode =  get_option('jtheme_bottom_adcode');
 		$bottomAdimg =  get_option('jtheme_bottom_adimg');
@@ -115,6 +115,15 @@ get_template_part('cat-featured');
 	</div><!-- end #content -->
 	
 		
-</div></div><!-- end #main -->
+</div>
+<?php
+$featuredVideo =  get_option('jtheme_index_status');
+if($featuredVideo == true){
+get_template_part('cat-featured-footer');
+ }else{
+ echo '<br /><br />';
+ }
+ ?>
+</div><!-- end #main -->
 
 <?php get_footer(); ?>

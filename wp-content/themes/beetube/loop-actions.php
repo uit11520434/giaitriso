@@ -14,6 +14,7 @@
 		
 		$selected_sort_types = jtheme_selected_sort_types(); // Get selected sort types
 		$selected_view_types = jtheme_selected_view_types(); // Get selected view types
+		$selected_view_auto = get_option('jtheme_auto_grid'); // Get selected view types
 		
 		/* Get the loop view of current page based on
 		 * user's cookie and the selected sort types
@@ -25,7 +26,7 @@
 			$_view_types = array_keys($selected_view_types);
 			$loop_view = $_view_types[0];
 		} else {
-			$loop_view = 'grid-small';
+			$loop_view = $selected_view_auto;
 		}
 		
 		global $section_view;

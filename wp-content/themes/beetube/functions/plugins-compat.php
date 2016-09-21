@@ -99,6 +99,13 @@ function jtheme_re2plugins() {
             'slug'      => 'automatic-youtube-video-posts',
             'required'  => false
         ),
+		array(
+            'name'               => 'Dailymotion Auto Post',
+            'slug'               => 'dailymotion_auto_post',
+            'source'             => get_stylesheet_directory() . '/inc/dailymotion_auto_post.zip',
+            'required'           => false,
+        ),
+		
 	);
  
     // Change this to your theme text domain, used for internationalising strings

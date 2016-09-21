@@ -184,8 +184,8 @@
             'post_title'    => wp_strip_all_tags($title),
             'post_content'  => $description,
             'post_category' => array('0' => $_POST['cat']),
-            'tax_input' => array('video_tag' => $tags),
-            'post_status'   => 'publish',
+            'tax_input' => array('post_tag' => $tags),
+            'post_status'   => 'pending',
             'post_type' => 'post'
             );
 
@@ -226,7 +226,6 @@
 					);
 					 
 					$_FILES = array("upload_attachment" => $file);
-					 
 					foreach ($_FILES as $file => $array) {
 					$newupload2 = insert_attachment($file,$post->ID);
 					$attachvideo = wp_get_attachment_url( $newupload2);

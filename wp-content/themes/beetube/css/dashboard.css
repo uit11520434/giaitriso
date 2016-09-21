@@ -152,11 +152,11 @@ line-height:42px;
     width: 1170px;
 }
 .fullwidth-home-template .list-large .item-video .hori-like,.fullwidth-home-template .list-large .item-post .hori-like {
-    bottom: 142px;
+    bottom:0px;
    width: 1159px;
 }
 .fullwidth-home-template .grid-medium .item-video .hori-like,.fullwidth-home-template .grid-medium .item-post .hori-like {
-	bottom: 73px;
+	bottom: 0px;
     width: 559px;
 	}
 .home-temp #content{margin-top:0px !important}
@@ -236,8 +236,77 @@ height:120px;
 .author-info .author-bio #social-nav{
 	height:15px !important;
 	}
-	
-	
+#social-share{
+float:left;
+display:inline;
+margin-top: -8px;
+}
+#social-share .social-share{
+float:left;
+margin-left:20px;
+width:84px;
+height:26px;
+text-align:center;
+line-height:26px;
+}
+#social-share .social-share a{
+display:block;
+
+}
+#social-share #facebook{
+background:url('images/facebook.png') no-repeat;
+}
+#social-share #twitter{
+background:url('images/twitter.png') no-repeat;
+}
+#social-share #googleplus{
+background:url('images/googleplus.png') no-repeat;
+}
+.jw-infinite-scroll>.loading,
+.jw-infinite-scroll[data-has-next="false"]>.next,
+.jw-infinite-scroll[data-has-next="true"]>.no-more{
+    display: none;
+}
+.jw-infinite-scroll>a.next>i{
+    margin-right: 10px;
+}
+.jw-infinite-scroll{
+width:530px;
+height:44px;
+margin:0 auto;
+}
+.jw-infinite-scroll a.btn{
+background-color:#f1f1f1;
+color:#999999;
+border:none;
+padding:13px 200px;
+}	
+.single .entry-content .fluid-width-video-wrapper{
+padding:0px !important
+}
+
+.full-single-page #content, .full-single-page .data-single-full, #sidebar .border-sep, #sidebar .widget {
+	border:none !important;
+	}
+#sidebar .border-sep{
+	height:0px !important;
+}
+.page-template-default #sidebar .border-sep, .category #sidebar .border-sep{
+	height:40px !important;
+}
+.full-single-ad{
+	margin-bottom:30px !important;
+}
+header .headerbanner{
+	float:left;
+	margin-left: 100px;
+	width:470px;
+	height:60px;
+	overflow:hidden;
+}
+.widget-single-post-stats{
+	margin-bottom:20px;
+}
 @media only screen and (min-width:800px) and (max-width:1300px) {
 	.fullwidth-home-template .loop-actions .topbanner {
 		margin-left: 150px;

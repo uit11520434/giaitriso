@@ -14,4 +14,7 @@
 			endwhile; ?>
 		</div>
 	</div><!-- end .loop-content -->
+		<?php
+			get_template_part('loop-nav');
+		?>
     </div>

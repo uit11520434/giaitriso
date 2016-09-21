@@ -34,6 +34,11 @@
 <?php jtheme_meta_title($post_id); ?>
 <?php jtheme_meta_keywords($post_id); ?>
 <?php jtheme_meta_description($post_id); ?>
+<meta property="og:type" content="video" />  
+<meta property="og:image" content="<?php $image_id = get_post_thumbnail_id();
+$image_url = wp_get_attachment_image_src($image_id,'large', true);
+echo $image_url[0];  ?>"/>
+<?php jtheme_sidebar_position(); ?>
 
 
 <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -83,6 +88,7 @@ if(!empty($css)) {
 }
 echo jtheme_nav_custom_css();
 $loader =  get_option('jtheme_loader');
+$loaderImg =  get_option('jtheme_loader_img');
 if($loader == true){
 ?>	
 <script>
@@ -94,7 +100,7 @@ if(document.readyState!='complete'){
  subinsblog.id="subinsblogldiv";
  var polu=99*99*99999999*999999999;
  subinsblog.style.zIndex=polu;
- subinsblog.style.background="#f8f8f8 url(<?php echo get_template_directory_uri(); ?>/images/loading01.gif) 50% 50% no-repeat";
+ subinsblog.style.background="#f8f8f8 url(<?php echo $loaderImg; ?>) 50% 50% no-repeat";
  subinsblog.style.backgroundPositionX="100%";
  subinsblog.style.backgroundPositionY="100%";
  subinsblog.style.position="fixed";
@@ -114,8 +120,13 @@ if(document.readyState!='complete'){
 </script>
 <?php
 }
-?>	
-<style>#back-top { position: fixed; bottom: 30px;right:0px;}#back-top  a { width: 108px; display: block; text-align: center; font: 11px/100% Arial, Helvetica, sans-serif; text-transform: uppercase; text-decoration: none; color: #bbb; -webkit-transition: 1s; -moz-transition: 1s; transition: 1s;}#back-top  a:hover { color: #000;}#back-top  span { width: 108px; height: 108px; display: block; margin-bottom: 7px; background: #ddd url(&#39;http://4.bp.blogspot.com/-0mlo-caVkrQ/Ub835FbxwKI/AAAAAAAACv4/y9bfGt2b1fs/s1600/0017.png&#39;) no-repeat center center; -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px; -webkit-transition: 1s; -moz-transition: 1s; transition: 1s;}#back-top  a:hover span{background-color: #777;}</style>
+$wrap_layout = get_option('jtheme_wrap_layout');
+$wrap_width = get_option('jtheme_wrap_width');
+if($wrap_layout == 'boxed-wrap') : $box_style = "#page { width: $wrap_width !important; }"; endif; 
+?>
+
+<style>#back-top { position: fixed; bottom: 30px;right:0px;}#back-top  a { width: 108px; display: block; text-align: center; font: 11px/100% Arial, Helvetica, sans-serif; text-transform: uppercase; text-decoration: none; color: #bbb; -webkit-transition: 1s; -moz-transition: 1s; transition: 1s;}#back-top  a:hover { color: #000;}#back-top  span { width: 108px; height: 108px; display: block; margin-bottom: 7px; background: #ddd url(&#39;http://4.bp.blogspot.com/-0mlo-caVkrQ/Ub835FbxwKI/AAAAAAAACv4/y9bfGt2b1fs/s1600/0017.png&#39;) no-repeat center center; -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px; -webkit-transition: 1s; -moz-transition: 1s; transition: 1s;}#back-top  a:hover span{background-color: #777;} <?php echo  $box_style; ?>
+</style>
 <?php wp_head(); ?>
 </head>
 
@@ -175,7 +186,24 @@ if(document.readyState!='complete'){
 			<div id="site-description"<?php if(!get_option('jtheme_site_description')) echo ' class="hidden"'; ?>><?php bloginfo('description'); ?></div>
 		<?php } ?>
 	</div><!-- end #branding -->
-
+		<?php
+			$headerAdcode =  get_option('jtheme_header_adcode');
+			$headerAdimg =  get_option('jtheme_header_adimg');
+			if(!empty($headerAdcode) && empty($headerAdimg)){
+			?>
+			<div class="headerbanner">
+				<?php echo $headerAdcode; ?>
+			</div>
+			<?php
+			}
+			if(empty($headerAdcode) && !empty($headerAdimg)){
+				?>
+			<div class="headerbanner">
+					<img src="<?php echo $headerAdimg; ?>" />
+			</div>
+			<?php
+			}
+			?>
 	<?php // Social Navigation
 				if(get_option('jtheme_social_nav_status')) {
 					echo '<div id="social-nav">';

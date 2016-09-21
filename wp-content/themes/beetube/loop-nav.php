@@ -11,6 +11,14 @@
 ?>
 		<?php global $wp_query;
 		
+		$indexNav = get_option('jtheme_index_nav');
+		
+		if($indexNav == 1){
+			echo'<br/>';
+			echo infinite();
+			echo'<br/>';
+		}else{
+		
 		if($wp_query->max_num_pages > 1) { ?>
 			<div class="loop-nav pag-nav">
 			<div class="loop-nav-inner">
@@ -32,4 +40,7 @@
 				} ?>
 			</div>
 			</div><!-- end .loop-nav -->
-		<?php } ?>
+		<?php } 
+			}
+			
+			?>

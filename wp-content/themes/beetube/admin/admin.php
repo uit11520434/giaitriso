@@ -30,6 +30,7 @@ class jtheme_General_Settings extends jtheme_Panel {
 		add_meta_box( 'jtheme-cat-featured-settings', __('Featured Posts Settings', 'jtheme'), array(&$this, 'meta_box'), $this->page_hook, 'normal');
 		add_meta_box( 'jtheme-single-settings', __('Single Post Pages Settings', 'jtheme'), array(&$this, 'meta_box'), $this->page_hook, 'normal');
 		//add_meta_box( 'jtheme-post-likes-settings', __('Post Likes Settings', 'jtheme'), array(&$this, 'meta_box'), $this->page_hook, 'normal');
+		add_meta_box( 'jtheme-fb-comments', __('FB Comments', 'jtheme'), array(&$this, 'meta_box'), $this->page_hook, 'normal');
 		add_meta_box( 'jtheme-hook-settings', __('Hook Settings', 'jtheme'), array(&$this, 'meta_box'), $this->page_hook, 'normal');
 		
 	}
@@ -89,7 +90,15 @@ class jtheme_General_Settings extends jtheme_Panel {
 					'callback' => 'jtheme_cat_featured_settings'
 				),
 				array(
+					'name' => 'jtheme_cat_featured_footer',
+					'callback' => 'jtheme_cat_featured_footer_settings'
+				),
+				array(
 					'name' => 'jtheme_cat_featured[posts_per_page]',
+					'value' => 15
+				),
+				array(
+					'name' => 'jtheme_cat_featured_footer[posts_per_page]',
 					'value' => 15
 				),
 				array(
@@ -286,13 +295,44 @@ class jtheme_General_Settings extends jtheme_Panel {
 					'label' => __( 'Check this box to enable loader', 'jtheme'),
 					'value' => true
 					
-				),				
+				),		
+				array(
+					'type' => 'upload',
+					'name' => 'jtheme_loader_img',
+					'title' => __('Loader Image', 'jtheme'),
+					'desc' => __( 'Upload a GIF animated image which will show before loading page.', 'jtheme'),
+					'value' => get_template_directory_uri().'/images/loading.gif'
+				),
 				array(
 					'type' => 'custom',
 					'title' => __('Main Navigation', 'jtheme'),
 					'label' => __('Check this to enable footer navigation in footer area.', 'jtheme'),
 					'desc' => sprintf(__('By default, the main navigation is a list of your categories, if your want to customize it, add a menu on <a href="%s">Apperance->Menus</a> page and set this menu as "Main Navigation" in "Theme Location" box.', 'jtheme'), admin_url('nav-menus.php')),
 				),
+				array(
+					'type' => 'checkbox',
+					'name' => 'jtheme_social',
+					'title' => __('Social share Enable Disable', 'jtheme'),
+					'label' => __( 'Check this box to enable Social share on single video page buttons', 'jtheme'),
+					'value' => true
+					
+				),	
+				array(
+					'type' => 'checkbox',
+					'name' => 'jtheme_seo_metaon',
+					'title' => __('SEO meta on/off', 'jtheme'),
+					'label' => __( 'Check this box to enable SEO meta on/off on front--end posting', 'jtheme'),
+					'value' => true
+					
+				),	
+				array(
+					'type' => 'checkbox',
+					'name' => 'jtheme_featured_imageon',
+					'title' => __('Featured image on/off', 'jtheme'),
+					'label' => __( 'Check this box to enable Featured image on/off', 'jtheme'),
+					'value' => true
+					
+				),	
 				array(
 					'type' => 'checkbox',
 					'name' => 'jtheme_user_login',
@@ -320,7 +360,7 @@ class jtheme_General_Settings extends jtheme_Panel {
 				array(
 					'type' => 'checkbox',
 					'name' => 'jtheme_index_nav',
-					'title' => __('Pagination on Simple HomePage', 'jtheme'),
+					'title' => __('Infinite scroll Pagination Enable', 'jtheme'),
 					'label' => __( 'Check this box to enable Pagination on Simple HomePage', 'jtheme'),
 					'value' => false
 					
@@ -335,6 +375,32 @@ class jtheme_General_Settings extends jtheme_Panel {
 					),
 					'title' => __('Sort Videos Simple HomePage', 'jtheme'),
 					'desc' => __( "Select any option to show your videos as on Simple HomePage", 'jtheme')
+				),
+				array(
+					'type' => 'select',
+					'name' => 'jtheme_sidebar_pos',
+					'value' => 'right',
+					'options' => array(
+						'right' => __('Right Side', 'jtheme'), 
+						'left' => __('Left Side', 'jtheme')
+					),
+					'title' => __('Sidebar position', 'jtheme'),
+					'desc' => __( "Select any option to show Sidebar position", 'jtheme')
+				),
+				array(
+					'type' => 'select',
+					'name' => 'jtheme_auto_grid',
+					'value' => 'grid-medium',
+					'options' => array(
+						'grid-mini' => __('Grid View with Mini Thumbnail', 'jtheme'),
+						'grid-small' => __('Grid View with Small Thumbnail', 'jtheme'),
+						'grid-medium' => __('Grid View with Medium Thumbnail', 'jtheme'),
+						'list-small' => __('List View with Small Thumbnail', 'jtheme'),
+						'list-medium' => __('List View with Medium Thumbnail', 'jtheme'),
+						'list-large' => __('List View with Large Thumbnail', 'jtheme'),
+					),
+					'title' => __('Auto Selection for Grid System', 'jtheme'),
+					'desc' => __( "Select any option to show your Auto Selection for Grid System", 'jtheme')
 				),
 				array(
 					'type' => 'textarea',
@@ -361,7 +427,22 @@ class jtheme_General_Settings extends jtheme_Panel {
 					'type' => 'upload',
 					'name' => 'jtheme_small_adimg',
 					'title' => __('Upload Image For small Ad', 'jtheme'),
-					'desc' => __( "Put Here Url of your ad image or upload image for your small ad for home page and single full width page, image should be 728x90 ", 'jtheme'),
+					'desc' => __( "Put Here Url of your ad image or upload image for your small ad for home page and single full width page, image should be 470x60 ", 'jtheme'),
+					'value' => 'http://placehold.it/470x60',					
+				),
+				
+				array(
+					'type' => 'textarea',
+					'name' => 'jtheme_header_adcode',
+					'title' => __('AD Code For header Ad', 'jtheme'),
+					'desc' => __( "Put Here Your ad code you ad height and with should be 470x60 ", 'jtheme'),
+					'value' => '',					
+				),
+				array(
+					'type' => 'upload',
+					'name' => 'jtheme_header_adimg',
+					'title' => __('Upload Image For header Ad', 'jtheme'),
+					'desc' => __( "Put Here Url of your ad image or upload image for your header ad for home page and single full width page, image should be 470x60 ", 'jtheme'),
 					'value' => 'http://placehold.it/470x60',					
 				),
 				
@@ -483,6 +564,13 @@ class jtheme_General_Settings extends jtheme_Panel {
 					'value' => '#444',
 					'title' => __('Main Nav BG Color', 'jtheme'),
 					'desc' => __('You can change the main nav bg color', 'jtheme')
+				),
+				array(
+					'type' => 'color',
+					'name' => 'jtheme_topnav_bgcolor',
+					'value' => '#222',
+					'title' => __('Top Bar BG Color', 'jtheme'),
+					'desc' => __('You can change Top Bar bg color', 'jtheme')
 				),
 				array(
 					'type' => 'checkbox',
@@ -683,6 +771,32 @@ class jtheme_General_Settings extends jtheme_Panel {
 						)
 						
 					)
+				),
+				array(
+					'type' => 'fields',
+					'title' => __('Youtube Link', 'jtheme'),
+					'fields' => array(
+						array(
+							'type' => 'checkbox',
+							'name' => 'jtheme_social_nav_links[youtu][status]',
+							'value' => true
+						),
+						array(
+							'type' => 'text',
+							'name' => 'jtheme_social_nav_links[youtu][url]',
+							'prepend' => __('URL:', 'jtheme'),
+							'value' => 'http://youtube.com/joinwebs',
+							'class' => 'regular-text'
+						),
+						array(
+							'type' => 'text',
+							'name' => 'jtheme_social_nav_links[youtu][title]',
+							'prepend' => __('Title Attribute:', 'jtheme'),
+							'value' => __('Premium Wordpress Themes', 'jtheme'),
+							'class' => 'regular-text'
+						)
+						
+					)
 				)
 				
 				
@@ -754,14 +868,39 @@ class jtheme_General_Settings extends jtheme_Panel {
 				)
 			),
 			
+			// Fields for Hook Settings
+			'jtheme-fb-comments' => array(
+				array(
+					'type' => 'checkbox',
+					'name' => 'jtheme_fbcomment',
+					'value' => true,
+					'title' => __('FB Comments', 'jtheme'),
+					'label' => __("Check this to enable FB comments.", 'jtheme')
+				),
+				array(
+					'type' => 'text',
+					'name' => 'jtheme_fb_appid',
+					'title' => __('FB App ID', 'jtheme'),
+					'desc' => __( 'Put here your FB app ID <a target="_blank" href="https://developers.facebook.com/apps">get ID</a>', 'jtheme'),
+				)
+			),
+			
 			// Fields for Design Settings
 			'jtheme-design-settings' => array(
 				array(
-					'type' => 'hidden',
+					'type' => 'select',
 					'name' => 'jtheme_wrap_layout',
 					'value' => 'full-wrap',
 					'options' => array('full-wrap' => __('Full Width', 'jtheme'), 'boxed-wrap'=>__('Boxed', 'jtheme')),
-					'title' => __('', 'jtheme'),
+					'title' => __('Layout', 'jtheme'),
+				),
+				array(
+					'type' => 'select',
+					'name' => 'jtheme_wrap_width',
+					'value' => '1170px',
+					'options' => array('boxed-wrap'=>__('1170px', 'jtheme')),
+					'title' => __('Boxed Layout Width', 'jtheme'),
+					'desc' => __('If you have select Boxed Layout from above Option so it will auto work.', 'jtheme'),
 				),
 				array(
 					'type' => 'select',
@@ -1175,11 +1314,18 @@ function jtheme_cat_featured_settings() {
 		'name' => 'jtheme_cat_featured[order]',
 		'selected' => $args['order']
 	));
+	$multi_dropdown_terms = jtheme_multi_dropdown_terms(array(
+		'echo' => 0,
+		'name' => 'jtheme_cat_featured[taxonomies]',
+		'selected' => $args['taxonomies']
+	));
+	
 
 	$html = '
 		<tr>
 			<td colspan="2">
-				<div class="description">'.__("These settings enable you to show posts with carousel effect on Specific pages. If you don't want to show it, set 'Number of Posts' to 0. OR Unchecked the specific page's check-box", 'jtheme').'</div>
+				<h1>Top Featured posts settings</h1>
+				<div class="description">'.__("These settings enable you to show Featured posts If you don't want to show it, set 'Number of Posts' to 0.", 'jtheme').'</div>
 			</td>
 		</tr>
 		<tr>
@@ -1191,6 +1337,66 @@ function jtheme_cat_featured_settings() {
 			</td>
 		</tr>
 	';
+	$html .= '<tr>
+			<th>'.__('Select Category', 'jtheme').'</th>
+			<td>
+				'.$multi_dropdown_terms.'
+			</td>
+		</tr>';
+
+	return $html;
+}
+
+function jtheme_cat_featured_footer_settings() {
+	$defaults = array(
+		'orderby' => '',
+		'order' => '',
+		'posts_per_page' => '',
+		'item'
+	);
+	$args = get_option('jtheme_cat_featured_footer');
+	$args = wp_parse_args($args, $defaults);
+	
+	$dropdown_sort_types = jtheme_dropdown_sort_types(array(
+		'echo' => 0, 
+		'name' => 'jtheme_cat_featured_footer[orderby]',
+		'selected' => $args['orderby']
+	));
+	
+	$dropdown_order_types = jtheme_dropdown_order_types(array(
+		'echo' => 0, 
+		'name' => 'jtheme_cat_featured_footer[order]',
+		'selected' => $args['order']
+	));
+	$multi_dropdown_terms = jtheme_multi_dropdown_terms(array(
+		'echo' => 0,
+		'name' => 'jtheme_cat_featured_footer[taxonomies]',
+		'selected' => $args['taxonomies']
+	));
+	
+
+	$html = '
+		<tr>
+			<td colspan="2">
+				<h1>Footer Featured posts settings</h1>
+				<div class="description">'.__("These settings enable you to show Featured posts If you don't want to show it, set 'Number of Posts' to 0.", 'jtheme').'</div>
+			</td>
+		</tr>
+		<tr>
+			<th>'.__('Query', 'jtheme').'</th>
+			<td>
+				<label>'.__('Sort:', 'jtheme').'</label> '.$dropdown_sort_types.'&nbsp;&nbsp;'.$dropdown_order_types.'&nbsp;&nbsp;
+				<label>'.__('Number of Posts:', 'jtheme').' </label>
+				<input class="small-text" type="text" value="'.$args['posts_per_page'].'" name="jtheme_cat_featured_footer[posts_per_page]" />
+			</td>
+		</tr>
+	';
+	$html .= '<tr>
+			<th>'.__('Select Category', 'jtheme').'</th>
+			<td>
+				'.$multi_dropdown_terms.'
+			</td>
+		</tr>';
 
 	return $html;
 }
@@ -1712,7 +1918,20 @@ class jtheme_Video_Settings_Panel extends jtheme_Post_Panel {
 				'name' => 'jtheme_meta_keywords',
 				'title' => __('Meta Keywords', 'jtheme'),
 				'desc' => __( 'IF you want to put your custom meta Keywords then put here otherwise your post TAGS will be the default meta Keywords', 'jtheme')
-			),			
+			),
+			array(
+				'type' => 'text',
+				'name' => 'likes',
+				'title' => __('Video Likes', 'jtheme'),
+				'desc' => __( 'You can not edit likes count until this post would liked once genuinely from the front-end', 'jtheme')
+			),
+			array(
+				'type' => 'text',
+				'name' => 'views',
+				'title' => __('Video Views', 'jtheme'),
+				'desc' => __( 'You can not set views count until you will not preview this video once then you would be able to edit views count', 'jtheme')
+			),
+			
 			
 			
 		);

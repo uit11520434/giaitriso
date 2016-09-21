@@ -50,6 +50,16 @@ get_header(); ?>
 	</div><!-- end #content -->
 	
 	<?php get_sidebar(); ?>
-</div></div><!-- end #main -->
+</div>
+
+<?php
+$featuredVideo =  get_option('jtheme_landingpage_status');
+		if($featuredVideo == true){
+		get_template_part('cat-featured-footer');
+		 }else{
+		 echo '<br /><br />';
+		 }
+?>
+</div><!-- end #main -->
 
 <?php get_footer(); ?>

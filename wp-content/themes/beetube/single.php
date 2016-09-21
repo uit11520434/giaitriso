@@ -32,6 +32,7 @@ $info_toggle = (int)get_option('jtheme_info_toggle');
 
 $featuredVideo =  get_option('jtheme_single_stand_status');
 $relatedVideo =  get_option('jtheme_related_status');
+$featuredImage =  get_option('jtheme_featured_imageon');
 ?>
 <?php
 if($featuredVideo == true){
@@ -55,14 +56,18 @@ if($featuredVideo == true){
 		<?php while (have_posts()) : the_post(); global $post;?>
 		
 		<div <?php post_class(); ?> id="post-<?php the_ID(); ?>">
-		
+		<?php
+			if($featuredImage == true){
+		?>
 		<div id="video">
 			<div class="screen fluid-width-video-wrapper">
+				
 				<?php
 				jtheme_thumb_html_single('custom-full');
 				?>
 			</div><!-- end .screen -->
 		</div><!-- end #video-->
+		<?php } ?>
 		<br clear="all" />
 		<div class="entry-header cf">
 			<div class="inner cf">
@@ -75,6 +80,31 @@ if($featuredVideo == true){
 							
 			</div>
 			<?php jtheme_post_actions($post->ID); ?>
+			
+				<?php
+				$social = get_option('jtheme_social');
+				if($social == true){ ?>
+				<div id="social-share">						
+					<div id="" class="social-share">
+						<div class="fb-share-button" data-href="<?php the_permalink(); ?>" data-type="button_count"></div>
+					</div>					
+					<div id="" class="social-share">
+						<div style="height:5px;"></div>
+						<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en">Tweet</a>
+					</div>
+					<div id="" class="social-share">
+						<div style="height:5px;"></div>
+						<div class="g-plus" data-action="share" data-annotation="bubble"></div>
+					</div>
+					<div id="" class="social-share" style="margin-left: 0px;">
+						<div style="height:5px;"></div>
+						<a href="//www.pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=http%3A%2F%2Ffarm8.staticflickr.com%2F7027%2F6851755809_df5b2051c9_z.jpg&description=Next%20stop%3A%20Pinterest" data-pin-do="buttonPin" data-pin-config="beside"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+						<!-- Please call pinit.js only once per page -->
+						<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<?php } ?>
 				
 			</div><!-- end .entry-header>.inner -->
 		</div><!-- end .entry-header -->
@@ -145,6 +175,14 @@ if($featuredVideo == true){
 
 	<?php get_sidebar(); ?>
 
-</div></div><!-- end #main -->
+</div>
+	<?php
+if($featuredVideo == true){
+ get_template_part('cat-featured-footer'); 
+ }else{
+ echo '<br /><br />';
+ }
+ ?>
+</div><!-- end #main -->
 	
 <?php get_footer(); ?>

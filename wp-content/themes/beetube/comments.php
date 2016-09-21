@@ -9,8 +9,25 @@
  *  1.0
  */
 ?>
-
 <?php
+$fb_comments = get_option('jtheme_fbcomment');
+$fb_appid = get_option('jtheme_fb_appid');
+if($fb_comments == true){
+?>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=<?php echo $fb_appid; ?>&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div class="fb-comments" data-href="<?php the_permalink(); ?>" data-numposts="5" data-width="870" data-colorscheme="light"></div>
+<?php
+}
+else{
 	/* If there are no comments are given and comments/pings are closed and viewing a page, return. */
 	if( !have_comments() && !comments_open() && !pings_open() && is_page() )
 		return;
@@ -50,4 +67,6 @@
 <?php if ( ! comments_open() && ! is_page() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
 	<p class="comments-closed"><?php _e( 'Comments are closed.', 'jtheme'); ?></p>
 <?php endif; ?>
-<?php jtheme_comment_form(array('comment_notes_after'=>'')); ?>
+<?php jtheme_comment_form(array('comment_notes_after'=>''));
+}
+ ?>
